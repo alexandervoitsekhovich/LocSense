@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocSense</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+</head>
+<body class="page">
+    <header class="header">
+        <h1 class="header__title">LocSense — демо-версия</h1>
+    </header>
+    
+    <main class="main">
+        <aside class="sidebar">
+            <form class="form" id="analysisForm">
+                <div class="form__group">
+                    <label class="form__label" for="city">Город</label>
+                    <select class="form__select" id="city" name="city" required>
+                        <option value="">Выберите город</option>
+                        <option value="Москва">Москва</option>
+                        <option value="Московская область">Московская область</option>
+                        <option value="Санкт-Петербург">Санкт-Петербург</option>
+                        <option value="Самара">Самара</option>
+                        <option value="Тюмень">Тюмень</option>
+                        <option value="Екатеринбург">Екатеринбург</option>
+                    </select>
+                    <div class="error" id="cityError"></div>
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label">Приоритет</label>
+                    <div class="form__checkbox-group">
+                        <label class="form__checkbox-label">
+                            <input class="form__checkbox" type="checkbox" name="priority" value="низкая конкуренция">
+                            Низкая конкуренция
+                        </label>
+                        <label class="form__checkbox-label">
+                            <input class="form__checkbox" type="checkbox" name="priority" value="высокая проходимость">
+                            Высокая проходимость
+                        </label>
+                        <label class="form__checkbox-label">
+                            <input class="form__checkbox" type="checkbox" name="priority" value="плотность заселения района">
+                            Плотность заселения района
+                        </label>
+                        <label class="form__checkbox-label">
+                            <input class="form__checkbox" type="checkbox" name="priority" value="высокая покупательская способность района">
+                            Высокая покупательская способность района
+                        </label>
+                    </div>
+                    <div class="error" id="priorityError"></div>
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label">Желаемая территория (м²)</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input class="form__input" type="number" id="minArea" name="minArea" placeholder="Мин." min="1" required>
+                        <input class="form__input" type="number" id="maxArea" name="maxArea" placeholder="Макс." min="1" required>
+                    </div>
+                    <div class="error" id="areaError"></div>
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label" for="maxRent">Максимальная стоимость аренды (₽/м²)</label>
+                    <input class="form__input" type="number" id="maxRent" name="maxRent" min="1" required>
+                    <div class="error" id="rentError"></div>
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label" for="avgCheck">Средний чек (₽)</label>
+                    <input class="form__input" type="number" id="avgCheck" name="avgCheck" min="100" max="5000" required>
+                    <div class="error" id="checkError"></div>
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label" for="businessType">Тип бизнеса</label>
+                    <select class="form__select" id="businessType" name="businessType" required>
+                        <option value="">Выберите тип бизнеса</option>
+                        <option value="кофейня">Кофейня</option>
+                        <option value="ресторан">Ресторан</option>
+                        <option value="аптека">Аптека</option>
+                        <option value="магазин одежды">Магазин одежды</option>
+                        <option value="фастфуд">Фастфуд</option>
+                    </select>
+                    <div class="error" id="businessTypeError"></div>
+                </div>
+                
+                <div class="form__group">
+                    <label class="form__label" for="districts">Список районов (каждый район с новой строки)</label>
+                    <textarea class="form__textarea" id="districts" name="districts" placeholder="Например:&#10;Центральный&#10;Северный&#10;Западный" required></textarea>
+                    <div class="error" id="districtsError"></div>
+                </div>
+                
+                <div class="form__buttons">
+                    <button type="submit" class="button button--primary">Анализировать</button>
+                    <button type="button" class="button button--secondary" id="resetButton">Сбросить</button>
+                </div>
+            </form>
+        </aside>
+        
+        <section class="content">
+            <div class="results">
+                <div class="results__header">
+                    <h2 class="results__title">Результаты анализа</h2>
+                    <div class="results__recommendation results__recommendation--success hidden" id="bestRecommendation"></div>
+                </div>
+                
+                <div class="loading hidden" id="loading">
+                    <div class="loading__spinner"></div>
+                    <p class="loading__text">Анализируем районы...</p>
+                </div>
+                
+                <div class="results__table-container">
+                    <table class="table" id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>Район</th>
+                                <th>Проходимость</th>
+                                <th>Конкуренция</th>
+                                <th>Аренда (₽/м²)</th>
+                                <th>Ср. чек района (₽)</th>
+                                <th>Индекс</th>
+                                <th>Рекомендация</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody">
+                            <!-- Данные будут вставлены с помощью JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
